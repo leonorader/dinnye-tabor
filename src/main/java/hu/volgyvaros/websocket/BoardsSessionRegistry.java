@@ -20,7 +20,7 @@ public class BoardsSessionRegistry {
 
     public void register(String name, WebSocketSession session) {
         sessions.put(name, session);
-        sessionsById.put(name, session.getId());
+        sessionsById.put(session.getId(), name);
         results.put(name, null);
         log.info("register name " + name);
     }
