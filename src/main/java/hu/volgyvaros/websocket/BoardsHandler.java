@@ -16,29 +16,20 @@ public class BoardsHandler extends TextWebSocketHandler {
 
     private final BoardsSessionRegistry registry;
 
-    private final CommandsRegistry commandsRegistry;
-
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         log.info("new session opened: " + session.getId());
     }
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        JSONObject parsedMessage = new JSONObject(message.getPayload());
-        String id = parsedMessage.getString("id");
-
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) {
         log.info("WS message: " + message.getPayload());
 
-        switch (id) {
-            case "register":
-                registerSession(parsedMessage.getString("name"), session);
-                break;
-            case "response":
-                setResponse(parsedMessage.getString("name"), parsedMessage.getString("command"), parsedMessage.getString("value"));
-                break;
-
-                default: break;
+        if (message.getPayload().contains("register")) {
+            JSONObject parsedMessage = new JSONObject(message.getPayload());
+            registerSession(parsedMessage.getString("name"), session);
+        } else {
+            setResponse(session, message.getPayload());
         }
     }
 
@@ -52,8 +43,8 @@ public class BoardsHandler extends TextWebSocketHandler {
         registry.register(name, session);
     }
 
-    private void setResponse(String name, String command, String value) {
-        commandsRegistry.setResponse(name, command, value);
+    private void setResponse(WebSocketSession session, String value) {
+        registry.setResponse(session.getId(), value);
     }
 
 }
