@@ -28,6 +28,8 @@ public class BoardsHandler extends TextWebSocketHandler {
         JSONObject parsedMessage = new JSONObject(message.getPayload());
         String id = parsedMessage.getString("id");
 
+        log.info("WS message: " + message.getPayload());
+
         switch (id) {
             case "register":
                 registerSession(parsedMessage.getString("name"), session);

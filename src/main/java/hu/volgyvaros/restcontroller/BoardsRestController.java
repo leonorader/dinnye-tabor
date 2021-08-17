@@ -3,6 +3,7 @@ package hu.volgyvaros.restcontroller;
 import hu.volgyvaros.websocket.BoardsSessionRegistry;
 import hu.volgyvaros.websocket.CommandsRegistry;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Log
 @RestController
 @RequestMapping("/api/boards/")
 @RequiredArgsConstructor
@@ -38,7 +40,7 @@ public class BoardsRestController {
     @GetMapping("/{name}/response/**")
     public String response(HttpServletRequest request, @PathVariable String name) {
         String requestURL = request.getRequestURL().toString();
-        String command = requestURL.split("/command/")[1];
+        String command = requestURL.split("/response/")[1];
         return commandsRegistry.getResponse(name, command);
     }
 
