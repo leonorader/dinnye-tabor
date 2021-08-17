@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -jar target/dinnye-tabor-1.0.0-SNAPSHOT.jar
