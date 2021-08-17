@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 @Log
 @RestController
@@ -26,6 +27,11 @@ public class BoardsRestController {
         String requestURL = request.getRequestURL().toString();
         String command = requestURL.split("/command/")[1];
         registry.sendCommand(name, command);
+        try {
+            TimeUnit.SECONDS.sleep(150);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
         return "name is " + name + " command is: " + command;
     }
 
