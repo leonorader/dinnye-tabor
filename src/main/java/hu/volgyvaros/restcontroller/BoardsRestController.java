@@ -28,7 +28,9 @@ public class BoardsRestController {
         String command = requestURL.split("/command/")[1];
         registry.sendCommand(name, command);
         try {
+            log.info("going to sleep");
             TimeUnit.MILLISECONDS.sleep(150);
+            log.info("back from sleep");
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
         }
@@ -37,7 +39,9 @@ public class BoardsRestController {
 
     @GetMapping("/{name}/response")
     public String response(HttpServletRequest request, @PathVariable String name) {
-        return registry.getResponse(name);
+        String response = registry.getResponse(name);
+        log.info("response: " + response);
+        return response;
     }
 
 }
