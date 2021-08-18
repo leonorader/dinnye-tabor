@@ -38,7 +38,7 @@ public class BoardsRestController {
     }
 
     @GetMapping("/{name}/response")
-    public String response(HttpServletRequest request, @PathVariable String name) {
+    public String response(@PathVariable String name) {
         String response = registry.getResponse(name);
         log.info("response: " + response);
         return response;
