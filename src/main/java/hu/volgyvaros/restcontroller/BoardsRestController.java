@@ -27,11 +27,11 @@ public class BoardsRestController {
         String requestURL = request.getRequestURL().toString();
         String command = requestURL.split("/command/")[1];
         registry.sendCommand(name, command);
-//        try {
-//            TimeUnit.SECONDS.sleep(150);
-//        } catch (InterruptedException ie) {
-//            Thread.currentThread().interrupt();
-//        }
+        try {
+            TimeUnit.MILLISECONDS.sleep(150);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
         return "name is " + name + " command is: " + command;
     }
 
