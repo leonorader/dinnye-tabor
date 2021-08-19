@@ -33,7 +33,7 @@ public class BoardsRestController {
                 || command.contains("temperature") || command.contains("input") || command.contains("button")) {
             try {
 //                log.info("going to sleep");
-                TimeUnit.MILLISECONDS.sleep(150);
+                TimeUnit.MILLISECONDS.sleep(200);
 //                log.info("back from sleep");
                 return registry.getResponse(name);
             } catch (InterruptedException ie) {
