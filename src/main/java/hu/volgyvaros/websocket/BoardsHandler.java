@@ -35,8 +35,8 @@ public class BoardsHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-        registry.removeBySessionId(session.getId());
         log.info("session closed: " + session.getId());
+        registry.removeBySessionId(session.getId());
     }
 
     private void registerSession(String name, WebSocketSession session) {
