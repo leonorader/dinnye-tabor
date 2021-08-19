@@ -27,14 +27,23 @@ public class BoardsRestController {
         String requestURL = request.getRequestURL().toString();
         String command = requestURL.split("/command/")[1];
         registry.sendCommand(name, command);
-        try {
-            log.info("going to sleep");
-            TimeUnit.MILLISECONDS.sleep(150);
-            log.info("back from sleep");
-        } catch (InterruptedException ie) {
-            Thread.currentThread().interrupt();
+
+        if (command.contains("wifi") || command.contains("voltage") || command.contains("gesture")
+                || command.contains("voltage") || command.contains("distance") || command.contains("gesture")
+                || command.contains("temperature") || command.contains("input") || command.contains("button")) {
+            try {
+//                log.info("going to sleep");
+                TimeUnit.MILLISECONDS.sleep(150);
+//                log.info("back from sleep");
+                return registry.getResponse(name);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+                return "NOK";
+            }
+        } else {
+            return "OK";
         }
-        return "name is " + name + " command is: " + command;
+        // return "name is " + name + " command is: " + command;
     }
 
     @GetMapping("/{name}/response")
