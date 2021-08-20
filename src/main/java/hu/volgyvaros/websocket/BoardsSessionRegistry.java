@@ -1,5 +1,6 @@
 package hu.volgyvaros.websocket;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
@@ -41,6 +42,16 @@ public class BoardsSessionRegistry {
     public void sendCommand(String name, String command) throws IOException {
         if (sessions.containsKey(name)) {
             sessions.get(name).sendMessage(new TextMessage(command));
+        }
+    }
+
+    public void broadcast() throws IOException {
+        for (WebSocketSession session : sessions.values()) {
+            if (session.isOpen()) {
+                session.sendMessage(new TextMessage("ping"));
+            } else {
+                removeBySessionId(session.getId());
+            }
         }
     }
 
